@@ -4,7 +4,7 @@ import head from "@/assets/head-hero.svg";
 import ecllipse from "@/assets/ecllipse-hero.svg";
 import Image from "next/image";
 
-const playfair = Playfair_Display({ weight: "400" });
+const playfair = Playfair_Display({ weight: "400", subsets: ["latin"] });
 
 const HeroSection = () => {
   return (
