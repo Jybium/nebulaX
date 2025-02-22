@@ -2,27 +2,19 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import image from "@/assets/nft-1.svg";
 
-const featuredNFTs = [
-  "/nft1.png",
-  "/nft2.png",
-  "/nft3.png",
-  "/nft4.png",
-  "/nft5.png",
-  "/nft6.png",
-  "/nft7.png",
-  "/nft8.png",
-];
+const featuredNFTs = [image, image, image, image, image, image, image, image];
 
 const tradedNFTs = [
   {
     id: 1,
     name: "Cosmic Arts",
     username: "Cosmicartist",
-    image: "/traded1.png",
+    image: image,
   },
-  { id: 2, name: "Nan", username: "NeonNan", image: "/traded2.png" },
-  { id: 3, name: "The Mask", username: "MaskB", image: "/traded3.png" },
+  { id: 2, name: "Nan", username: "NeonNan", image: image },
+  { id: 3, name: "The Mask", username: "MaskB", image: image },
 ];
 
 export default function NFTMarketplace() {
@@ -35,7 +27,7 @@ export default function NFTMarketplace() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="grid grid-cols-4 gap-4"
+          className="grid grid-cols-4 gap-8"
         >
           {featuredNFTs.map((src, index) => (
             <motion.div key={index} whileHover={{ scale: 1.1 }}>
@@ -44,7 +36,7 @@ export default function NFTMarketplace() {
                 alt="NFT"
                 width={200}
                 height={200}
-                className="rounded-lg"
+                className="rounded-lg w-full"
               />
             </motion.div>
           ))}
