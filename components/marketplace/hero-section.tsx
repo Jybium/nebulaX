@@ -18,7 +18,7 @@ const HeroSection = () => {
         />
       </div>
 
-      <div className="w-fit m-a5uto h-[80vh] flex flex-col justify-center relative z-10 space-y-3">
+      <div className="w-fit m-auto h-[80vh] flex flex-col justify-center relative z-10 space-y-3">
         <h1
           className="text-6xl font-medium text-white leading-[98px]"
           style={playfair.style}
