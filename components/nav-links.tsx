@@ -1,17 +1,19 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
+import { ConnectBtn } from "./connect-button";
 
 const NavLink = () => {
   return (
-    <nav className="flex items-center space-x-8 text-white">
-      <ul className="flex items-center space-x-8 text-white">
-        <li className="">
+    <nav className="flex items-center space-x-12 text-white">
+      <ul className="flex items-center space-x-12 text-white">
+        {/* <li className="">
           <a href="/about" className="">
             About
           </a>
-        </li>
+        </li> */}
         <li className="">
-          <a href="/teams" className="">
-            Teams
+          <a href="/explore" className="">
+            Explore
           </a>
         </li>
         <li className="">
@@ -21,9 +23,7 @@ const NavLink = () => {
         </li>
       </ul>
 
-      <button className="rounded-full text-black bg-white p-2 font-bold">
-        Connect Wallet
-      </button>
+      <ConnectBtn />
     </nav>
   );
 };

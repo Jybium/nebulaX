@@ -1,26 +1,7 @@
 import Image from "next/image";
+import { parseEther } from "viem";
 import nft from "@/assets/nft-1.svg";
-
-export const nfts = [
-  {
-    id: 1,
-    image: nft,
-    title: "The Rings",
-    price: "0.002 ETH",
-  },
-  {
-    id: 2,
-    image: nft,
-    title: "The Rings",
-    price: "0.001 ETH",
-  },
-  {
-    id: 3,
-    image: nft,
-    title: "The Rings",
-    price: "0.112 ETH",
-  },
-];
+import { formatEther } from "ethers";
 
 interface NFTCardProps {
   image: string;
@@ -29,10 +10,19 @@ interface NFTCardProps {
 }
 
 const NFTCard = ({ image, title, price }: NFTCardProps) => {
+  const ethValue = formatEther(price.toString());
+
   return (
     <div className="bg-black rounded-xl shadow-lg border border-gray-700 w-full max-w-sm">
       <div className="relative w-full h-48 rounded-t-lg overflow-hidden bg-white">
-        <Image src={image} alt={title} objectFit="contain" />
+        <Image
+          src={image || nft}
+          alt={title || "image"}
+          objectFit="contain"
+          className="mx-auto"
+          width={200}
+          height={200}
+        />
       </div>
 
       <div className="p-4">
@@ -45,7 +35,7 @@ const NFTCard = ({ image, title, price }: NFTCardProps) => {
 
           <div className="">
             <p className="font-bold text-white">Price</p>
-            <span className="font-bold">{price}</span>
+            <span className="font-bold">{ethValue} ETH</span>
           </div>
         </div>
       </div>
