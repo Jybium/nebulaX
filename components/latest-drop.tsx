@@ -9,6 +9,10 @@ import toast from "react-hot-toast";
 
 interface NFT {
   id: string;
+  creator?: string;
+  seller?: string;
+  royalty?: string;
+  amount: string;
   image: string;
   title: string;
   price: string;

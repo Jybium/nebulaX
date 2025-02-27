@@ -9,7 +9,7 @@ const playfair = Playfair_Display({ weight: "400", subsets: ["latin"] });
 const HeroSection = () => {
   return (
     <section className="flex flex-col items-center justify-center h-screen bg-black text-white">
-      <div className="absolute flex justify-between w-full">
+      <div className="absolute flex justify-between w-full opacity-30">
         <Image
           src={head}
           alt="head"

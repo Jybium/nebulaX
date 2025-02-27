@@ -1,46 +1,94 @@
 import Image from "next/image";
-import { parseEther } from "viem";
+import { CheckCircle } from "lucide-react"; // Example icon library
+import { ethers, formatEther } from "ethers";
+import { useAccount } from "wagmi";
+import { emojiAvatarForAddress } from "@/lib/emoji-avater-for-address";
 import nft from "@/assets/nft-1.svg";
-import { formatEther } from "ethers";
 
 interface NFTCardProps {
+  id: string;
   image: string;
   title: string;
   price: string;
+  creator?: string;
+  royalty?: string;
+  amount: string;
 }
 
-const NFTCard = ({ image, title, price }: NFTCardProps) => {
+export default function NFTCard({
+  title,
+  creator,
+  price,
+  image,
+}: NFTCardProps) {
   const ethValue = formatEther(price.toString());
 
+  const { color: backgroundColor, emoji } = emojiAvatarForAddress(
+    creator ?? ""
+  );
+
   return (
-    <div className="bg-black rounded-xl shadow-lg border border-gray-700 w-full max-w-sm">
-      <div className="relative w-full h-48 rounded-t-lg overflow-hidden bg-white">
+    <div className="bg-black text-white rounded-lg -64 shadow-lg flex flex-col justify-between border border-gray-800">
+      {/* Top Section */}
+      <div className="relative mb-3 bg-white rounded-md">
+        {/* Profile Image */}
+
+        <div className="absolute top-2 left-3 flex items-center">
+          <div
+            role="button"
+            tabIndex={1}
+            className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
+            style={{
+              backgroundColor,
+              boxShadow: "0px 2px 2px 0px rgba(81, 98, 255, 0.20)",
+            }}
+          >
+            {emoji}
+          </div>
+        </div>
+
+        {/* NFT Image */}
         <Image
           src={image || nft}
-          alt={title || "image"}
-          objectFit="contain"
-          className="mx-auto"
-          width={200}
-          height={200}
+          alt="NFT"
+          width={256}
+          height={256}
+          className="rounded-md mx-auto h-40 object-contain"
         />
       </div>
 
-      <div className="p-4">
-        <h3 className="text-white font-bold text-lg mt-3">{title}</h3>
-        <div className="flex justify-between items-center text-white mt-2">
-          <div className="">
-            <p className="text-white font-bold">Minting</p>
-            <span className="text-green-400">● Now</span>
+      {/* Bottom Section */}
+      <div className="flex items-center justify-between mb-2 p-3">
+        <div className="flex items-center gap-2">
+          <div
+            role="button"
+            tabIndex={1}
+            className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
+            style={{
+              backgroundColor,
+              boxShadow: "0px 2px 2px 0px rgba(81, 98, 255, 0.20)",
+            }}
+          >
+            {emoji}
           </div>
 
-          <div className="">
-            <p className="font-bold text-white">Price</p>
-            <span className="font-bold">{ethValue} ETH</span>
-          </div>
+          <p className="text-sm font-bold">{title || creator?.slice(0, 12)}</p>
+
+          <CheckCircle className="w-4 h-4 text-green-500" />
+        </div>
+        <p className="text-sm text-white">{ethValue} ETH.</p>
+      </div>
+
+      <div className="flex w-full items-center justify-between p-3">
+        <div className="flex w-full justify-between items-center gap-2">
+          <button className="bg-white text-black text-xs font-semibold px-5 py-2 rounded-lg hover:bg-gray-200">
+            BUY
+          </button>
+          <button className="bg-[#1E1E1E] border border-gray-600 text-white text-xs font-semibold px-5 py-2 rounded-lg hover:bg-gray-700">
+            Place Bid
+          </button>
         </div>
       </div>
     </div>
   );
-};
-
-export default NFTCard;
+}
