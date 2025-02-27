@@ -77,12 +77,12 @@ export default function LatestDrops() {
           </div>
         ))}
       </div>
-      <button
+      {/* <button
         onClick={() => refetch && refetch()}
         className="mt-4 px-4 py-2 bg-gray-700 rounded text-white"
       >
         Refresh
-      </button>
+      </button> */}
     </section>
   );
 }

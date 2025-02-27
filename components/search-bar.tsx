@@ -40,7 +40,7 @@ const SearchBar = ({
   };
 
   return (
-    <div className="flex w-2/5 items-center border rounded-2xl shadow-sm bg-white p-1 focus-within:ring-1 focus-within:ring-brand-primary-1">
+    <div className="flex w-1/5 items-center border rounded-2xl shadow-sm bg-white p-1 focus-within:ring-1 focus-within:ring-brand-primary-1">
       <button
         onClick={handleSearch}
         aria-label="Execute search"
@@ -57,7 +57,7 @@ const SearchBar = ({
         onKeyPress={handleKeyPress}
         placeholder={placeholder}
         aria-label="Search NebulaX"
-        className="flex-1 outline-none border-none focus:ring-0 bg-transparent text-black placeholder:text-black/60"
+        className="flex-1 outline-none border-none focus:ring-0 bg-transparent text-black placeholder:text-black/60 text-sm"
       />
     </div>
   );

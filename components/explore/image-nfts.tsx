@@ -1,95 +1,95 @@
-import Image from "next/image";
-import { FaHeart } from "react-icons/fa";
+"use client";
 
-const nftItems = [
-  {
-    id: 1,
-    image: "/nfts/nft1.jpg",
-    profile: "/avatars/creator1.jpg",
-    creator: "CosmicArts",
-    name: "Nan",
-    rating: "⭐",
-    likes: 700,
-  },
-  {
-    id: 2,
-    image: "/nfts/nft2.jpg",
-    profile: "/avatars/creator2.jpg",
-    creator: "DogArts",
-    name: "Doni",
-    rating: "⭐⭐",
-    likes: 1000,
-  },
-  {
-    id: 3,
-    image: "/nfts/nft3.jpg",
-    profile: "/avatars/creator2.jpg",
-    creator: "DogArts",
-    name: "Doni",
-    rating: "⭐⭐",
-    likes: 500,
-  },
-  {
-    id: 4,
-    image: "/nfts/nft4.jpg",
-    profile: "/avatars/creator2.jpg",
-    creator: "DogArts",
-    name: "Doni",
-    rating: "⭐⭐",
-    likes: 1000,
-  },
-];
+import NFTCard from "@/components/cards/nft-card";
+import NFT_ABI from "@/ABI/NebulaX.json";
+import { NebulaX } from "@/ABI/contract-address";
+import { useContractInteraction } from "@/hooks/use-contract-interaction";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+export interface NFT {
+  id: string;
+  creator?: string;
+  seller?: string;
+  royalty?: string;
+  amount: string;
+  image: string;
+  title: string;
+  price: string;
+}
 
 const ImageNFTs = () => {
+  const [nfts, setNfts] = useState<NFT[]>([]);
+
+  const { data, isLoading, error, refetch } = useContractInteraction({
+    address: NebulaX,
+    abi: NFT_ABI?.abi,
+    functionName: "getListedNFTs",
+    type: "read",
+    enabled: true,
+  });
+
+  useEffect(() => {
+    // Check if data exists and is structured as expected
+    if (Array.isArray(data) && data.length === 3) {
+      const [ids, sellers, listings] = data;
+
+      console.log(data);
+
+      // If any of these arrays are empty, there are no NFTs listed.
+      if (ids.length === 0) {
+        toast.error("No NFTs listed.");
+        console.log("No NFTs listed.");
+        return;
+      }
+
+      // Map over one of the arrays (they should all have the same length)
+      const formattedResult = listings
+        .filter((listing: any) => listing.isListed)
+        .map((listing: any, index: any) => ({
+          id: ids[index],
+          // There's no "image" or "title" in the ABI, so you'll need to adjust these
+          price: listing.price,
+          royalty: listing.royalty,
+          amount: listing.amount,
+          creator: listing.creator,
+          seller: listing.seller,
+          isListed: listing.isListed,
+        }));
+
+      console.log("Formatted Result:", formattedResult);
+      setNfts(formattedResult);
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Loading Listed Image NFTS...</div>;
+  if (error)
+    return (
+      <div className="p-6 text-red-500">
+        Error fetching drops: {error.message}
+      </div>
+    );
+
   return (
-    <section className="bg-black text-white py-10 px-6 lg:px-16">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4">Image NFTs</h2>
+    <section className="bg-black text-white p-10">
+      <div className="">
+        <h2 className="text-xl font-semibold mb-6">Image NFTs</h2>
 
-        <div className="bg-gray-800 p-6 rounded-lg">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {nftItems.map((nft) => (
-              <div
-                key={nft.id}
-                className="bg-white rounded-xl overflow-hidden shadow-md relative"
-              >
-                {/* NFT Image */}
-                <Image
-                  src={nft.image}
-                  alt={nft.name}
-                  width={200}
-                  height={200}
-                  className="w-full h-auto"
-                />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {nfts.map((nft) => (
+            <div className="" key={nft.id}>
+              <NFTCard key={nft.id} {...nft} />
+            </div>
+          ))}
+        </div>
 
-                {/* Creator Profile */}
-                <div className="absolute top-2 left-2 w-8 h-8 rounded-full overflow-hidden">
-                  <Image
-                    src={nft.profile}
-                    alt={nft.creator}
-                    width={32}
-                    height={32}
-                  />
-                </div>
-
-                {/* NFT Details */}
-                <div className="bg-black text-white p-2">
-                  <p className="text-sm font-semibold">{nft.creator}</p>
-                  <p className="text-xs">
-                    {nft.name} {nft.rating}
-                  </p>
-
-                  <div className="flex justify-between items-center mt-2 text-xs">
-                    <span className="text-green-400">●</span>
-                    <div className="flex items-center gap-1">
-                      <FaHeart className="text-red-500" />
-                      {nft.likes}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="flex justify-end w-full">
+          <button
+            onClick={() => refetch && refetch()}
+            className="border border-white mt-4 px-7 py-2 bg-black rounded text-white"
+          >
+            Refresh
+          </button>
         </div>
       </div>
     </section>
