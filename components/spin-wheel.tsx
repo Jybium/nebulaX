@@ -22,8 +22,8 @@ const SpinWheel = ({ setShowSpin }: SpinWheelProps) => {
     if (myChartRef.current) myChartRef.current.destroy();
 
     const canvas = wheelRef.current;
-    canvas.width = 500;
-    canvas.height = 500;
+    canvas.width = 400;
+    canvas.height = 400;
 
     const newChart = new Chart(canvas, {
       plugins: [ChartDataLabels],
@@ -148,14 +148,14 @@ const SpinWheel = ({ setShowSpin }: SpinWheelProps) => {
       <div className="absolute top-4 right-4">
         <button
           onClick={setShowSpin}
-          className="text-white bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+          className="text-white bg-gray-700 hover:bg-gray-600 rounded-full p-2 px-3"
         >
           Close
         </button>
       </div>
 
       {/* Wheel Container */}
-      <div className="relative w-[500px] h-[500px] p-8 rounded-lg shadow-lg bg-white">
+      <div className="relative w-[400px] h-[400px]rounded-lg shadow-lg">
         <canvas ref={wheelRef}></canvas>
       </div>
 
