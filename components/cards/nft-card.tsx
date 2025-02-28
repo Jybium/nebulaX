@@ -5,14 +5,14 @@ import { useAccount } from "wagmi";
 import { emojiAvatarForAddress } from "@/lib/emoji-avater-for-address";
 import nft from "@/assets/nft-1.svg";
 
-import { NebulaXNFT } from "@/ABI/contract-address";
+import { NebulaXNFT } from "@/abi/contract-address";
 import NebulatxNFT from "@/abi/NebulaXNFT.json";
 
-import { NebulaXToken } from "@/ABI/contract-address";
-import { NebulaX } from "@/ABI/contract-address";
+import { NebulaXToken } from "@/abi/contract-address";
+import { NebulaX } from "@/abi/contract-address";
 
-import NebulaX_ABI from "@/ABI/NebulaX.json";
-import NebulaXToken_ABI from "@/ABI/NebulaXToken.json";
+import NebulaX_ABI from "@/abi/NebulaX.json";
+import NebulaXToken_ABI from "@/abi/NebulaXToken.json";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 import toast from "react-hot-toast";
 interface NFTCardProps {

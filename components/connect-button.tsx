@@ -11,8 +11,8 @@ import { emojiAvatarForAddress } from "@/lib/emoji-avater-for-address";
 import { AnimatePresence, motion } from "framer-motion";
 import UploadNFT from "./form/upload-nfts";
 
-import { NebulaXNFT } from "@/ABI/contract-address";
-import { NebulaX } from "@/ABI/contract-address";
+import { NebulaXNFT } from "@/abi/contract-address";
+import { NebulaX } from "@/abi/contract-address";
 import NebulatxNFT from "@/abi/NebulaXNFT.json";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 
