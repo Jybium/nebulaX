@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import NFTCard from "./cards/nft-card";
-import NFT_ABI from "@/abi/NebulaX.json";
-import { NebulaX } from "@/abi/contract-address";
+import NFT_ABI from "@/ABI/NebulaX.json";
+import { NebulaX } from "@/ABI/contract-address";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 import toast from "react-hot-toast";
 
