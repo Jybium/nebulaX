@@ -62,8 +62,9 @@ export default function LatestDrops() {
     }
   }, [data]);
 
-  if (isLoading) return <div>Loading latest drops...</div>;
-  if (error) return <div>Error fetching drops: {error.message}</div>;
+  if (isLoading) return <div className="p-6">Loading latest drops...</div>;
+  if (error)
+    return <div className="p-6">Error fetching drops: {error.message}</div>;
 
   return (
     <section className="p-6 bg-black text-white">
