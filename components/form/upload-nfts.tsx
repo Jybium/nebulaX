@@ -256,7 +256,8 @@ const UploadNFT = ({
           className="w-full mt-3 p-2 bg-white hover:bg-white/80 rounded text-black font-bold"
           onClick={() => {
             if (write && writeApproval) {
-              write(), writeApproval();
+              writeApproval();
+              write();
             }
           }}
           disabled={isPending}
