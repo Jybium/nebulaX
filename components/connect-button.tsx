@@ -146,7 +146,7 @@ export const ConnectBtn = () => {
             className="fixed w-full h-screen inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40"
           >
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-              <h2 className="text-xl font-bold">Choose NFT Type</h2>
+              <h2 className="text-xl font-bold text-black">Choose NFT Type</h2>
               <button
                 className="mt-4 w-full bg-blue-500 text-white p-2 rounded"
                 onClick={() => setNftType("photo")}
@@ -160,7 +160,7 @@ export const ConnectBtn = () => {
                 Create Video NFT
               </button>
               <button
-                className="mt-4 w-full bg-gray-300 p-2 rounded"
+                className="mt-10 w-full bg-gray-700 p-2 rounded"
                 onClick={() => {
                   setShowModal(false);
                   setNftType(null);
@@ -182,7 +182,11 @@ export const ConnectBtn = () => {
             exit={{ opacity: 0, scale: 0.9 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
           >
-            <UploadNFT setShowModal={() => setShowModal(false)} />
+            <UploadNFT
+              setShowModal={() => setShowModal(false)}
+              setNftType={setNftType}
+              type={nftType}
+            />
           </motion.div>
         </AnimatePresence>
       )}

@@ -8,6 +8,7 @@ import { NebulaX } from "@/ABI/contract-address";
 import NebulaX_ABI from "@/ABI/NebulaX.json";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 import toast from "react-hot-toast";
+import { X } from "lucide-react";
 
 // Your Pinata API Keys
 const PINATA_API_KEY = process.env.API_KEY;
@@ -18,7 +19,15 @@ const token =
   process.env.JWT ||
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI4OTViMjIwZC00OTcwLTRjYTMtOWRkZi1hZGUxZWIyN2U0NTYiLCJlbWFpbCI6ImFzYW9sdWp0b21pQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6IkZSQTEifSx7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6Ik5ZQzEifV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiJiODM3ZTA2NzIwYzM0OWM4OTllOSIsInNjb3BlZEtleVNlY3JldCI6Ijk1NmJlYjc1YjFlMTBlNWY2MGNiNzE0YWUwMzgzZWQxODhlZjJlOGNiNzllMGYyZGY3MzI4NDQ4YzI0NjRiYTciLCJleHAiOjE3NzIxODczMjR9.tbpZEFmqSVl7j-5iKTdOutni-vNXWjJVrsU5XjHTds0";
 
-const UploadNFT = ({ setShowModal }: { setShowModal: () => void }) => {
+const UploadNFT = ({
+  setShowModal,
+  setNftType,
+  type,
+}: {
+  setShowModal: () => void;
+  setNftType: (v: any) => void;
+  type: string;
+}) => {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -70,12 +79,25 @@ const UploadNFT = ({ setShowModal }: { setShowModal: () => void }) => {
       // Create metadata JSON
       const metadata = {
         name: title,
+        type: type,
         description,
         image: imageUrl,
         attributes: [
           {
+            trait_type: "Title",
+            value: title,
+          },
+          {
+            trait_type: "Description",
+            value: description,
+          },
+          {
             trait_type: "Price",
             value: price,
+          },
+          {
+            trait_type: "Type",
+            value: type,
           },
           {
             trait_type: "Quantity",
@@ -138,12 +160,21 @@ const UploadNFT = ({ setShowModal }: { setShowModal: () => void }) => {
     if (data) {
       toast.success("NFT minted successfully!");
       setShowModal();
+      setNftType("");
     }
   }, [data]);
 
   return (
     <div className="p-6 bg-neutral-900 rounded-xl shadow-lg max-w-xl mx-auto">
-      <h2 className="text-xl font-bold text-white mb-4">Create Your NFT</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-bold text-white mb-4">Create Your NFT</h2>
+        <X
+          onClick={() => {
+            setShowModal();
+            setNftType("");
+          }}
+        />
+      </div>
 
       <input
         type="text"

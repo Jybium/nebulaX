@@ -1,5 +1,22 @@
-import { useReadContract, useWriteContract } from "wagmi";
+import { useState, useEffect } from "react";
+import { useReadContract, useWriteContract, useAccount } from "wagmi";
 import { toast } from "react-hot-toast";
+
+// Custom hook to fetch the current chain ID.
+function useChainId() {
+  const [chainId, setChainId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_chainId" })
+        .then((id: string) => setChainId(id))
+        .catch((error: any) => console.error("Failed to get chainId:", error));
+    }
+  }, []);
+
+  return chainId;
+}
 
 interface ContractInteractionProps {
   address: `0x${string}`; // Smart contract address
@@ -22,6 +39,10 @@ export function useContractInteraction({
   onSuccess,
   onError,
 }: ContractInteractionProps) {
+  // Check wallet connection and network status.
+  const { isConnected } = useAccount();
+  const chainId = useChainId();
+
   if (type === "read") {
     if (!enabled) {
       return {
@@ -31,7 +52,6 @@ export function useContractInteraction({
         refetch: () => {},
       };
     }
-    // Call the read hook with our parameters.
     const { data, isLoading, error, refetch } = useReadContract({
       address,
       abi,
@@ -42,10 +62,25 @@ export function useContractInteraction({
   }
 
   if (type === "write") {
-    // For writes, first obtain the writeContract function from the hook.
     const { writeContract, data, error, isPending } = useWriteContract();
 
     const write = () => {
+      // Check for internet connection.
+      if (!navigator.onLine) {
+        toast.error("No internet connection. Please check your network.");
+        return;
+      }
+      // Check if the wallet is connected.
+      if (!isConnected) {
+        toast.error("Please connect your wallet.");
+        return;
+      }
+      // Check if a network (chainId) is available.
+      if (!chainId) {
+        toast.error("Please connect to a supported network.");
+        return;
+      }
+      // Proceed with the write transaction.
       writeContract(
         { abi, address, functionName, args },
         {

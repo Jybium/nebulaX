@@ -11,19 +11,29 @@ import { useContractInteraction } from "@/hooks/use-contract-interaction";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NFT } from "../explore/image-nfts";
+import { emojiAvatarForAddress } from "@/lib/emoji-avater-for-address";
 
 const featuredNFTs = [image, image, image, image, image, image, image, image];
 
-const tradedNFTs = [
-  {
-    id: 1,
-    name: "Cosmic Arts",
-    username: "Cosmicartist",
-    image: image,
-  },
-  { id: 2, name: "Nan", username: "NeonNan", image: image },
-  { id: 3, name: "The Mask", username: "MaskB", image: image },
-];
+const TradedNFTs = ({ creator }: { creator: string | undefined }) => {
+  const { color: backgroundColor, emoji } = emojiAvatarForAddress(
+    creator ?? ""
+  );
+
+  return (
+    <div
+      role="button"
+      tabIndex={1}
+      className="h-20 w-20 rounded-full mx-auto flex items-center justify-center flex-shrink-0 overflow-hidden"
+      style={{
+        backgroundColor,
+        boxShadow: "0px 2px 2px 0px rgba(81, 98, 255, 0.20)",
+      }}
+    >
+      {emoji}
+    </div>
+  );
+};
 
 export default function NFTMarketplace() {
   const [nfts, setNfts] = useState<NFT[]>([]);
@@ -109,13 +119,7 @@ export default function NFTMarketplace() {
               }}
               className="bg-gray-900 p-4 rounded-lg text-center"
             >
-              <Image
-                src={nft.image}
-                alt={nft.creator || "Unknown Creator"}
-                width={100}
-                height={100}
-                className="mx-auto rounded-full"
-              />
+              <TradedNFTs creator={nft.creator} />
               <h3 className="mt-2 font-semibold">
                 {nft.creator?.slice(0, 20)}
               </h3>
