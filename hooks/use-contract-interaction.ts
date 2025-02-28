@@ -3,20 +3,20 @@ import { useReadContract, useWriteContract, useAccount } from "wagmi";
 import { toast } from "react-hot-toast";
 
 // Custom hook to fetch the current chain ID.
-function useChainId() {
-  const [chainId, setChainId] = useState<string | null>(null);
+// function useChainId() {
+//   const [chainId, setChainId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "eth_chainId" })
-        .then((id: string) => setChainId(id))
-        .catch((error: any) => console.error("Failed to get chainId:", error));
-    }
-  }, []);
+//   useEffect(() => {
+//     if (window.ethereum) {
+//       window.ethereum
+//         .request({ method: "eth_chainId" })
+//         .then((id: string) => setChainId(id))
+//         .catch((error: any) => console.error("Failed to get chainId:", error));
+//     }
+//   }, []);
 
-  return chainId;
-}
+//   return chainId;
+// }
 
 interface ContractInteractionProps {
   address: `0x${string}`; // Smart contract address
@@ -41,7 +41,7 @@ export function useContractInteraction({
 }: ContractInteractionProps) {
   // Check wallet connection and network status.
   const { isConnected } = useAccount();
-  const chainId = useChainId();
+  const { chainId } = useAccount();
 
   if (type === "read") {
     if (!enabled) {
@@ -77,6 +77,7 @@ export function useContractInteraction({
       }
       // Check if a network (chainId) is available.
       if (!chainId) {
+        console.log(chainId);
         toast.error("Please connect to a supported network.");
         return;
       }

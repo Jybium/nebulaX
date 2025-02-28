@@ -11,14 +11,14 @@ const HomePage = () => {
 
   useEffect(() => {
     // Get today's date in YYYY-MM-DD format
-    const today = new Date().toISOString().slice(0, 10);
-    const lastShownDate = localStorage.getItem("spinWheelShownDate");
+    // const today = new Date().toISOString().slice(0, 10);
+    // const lastShownDate = localStorage.getItem("spinWheelShownDate");
 
     // Open modal only if it hasn't been shown today
-    if (lastShownDate !== today) {
-      setSpinWheelOpen(true);
-      localStorage.setItem("spinWheelShownDate", today);
-    }
+    // if (lastShownDate !== today) {
+    setSpinWheelOpen(true);
+    // localStorage.setItem("spinWheelShownDate", today);
+    // }
   }, []);
 
   return (

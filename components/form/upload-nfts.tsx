@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useWriteContract } from "wagmi";
 import { parseEther } from "viem";
-import { NebulaX } from "@/ABI/contract-address";
+import { NebulaX, NebulaXNFT } from "@/ABI/contract-address";
 import NebulaX_ABI from "@/ABI/NebulaX.json";
+import NebulaXNFT_ABI from "@/ABI/NebulaXNFT.json";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 import toast from "react-hot-toast";
 import { X } from "lucide-react";
@@ -154,6 +155,15 @@ const UploadNFT = ({
     type: "write",
   });
 
+  const { write: writeApproval } = useContractInteraction({
+    address: NebulaXNFT,
+    abi: NebulaXNFT_ABI.abi,
+    functionName: "setApprovalForAll",
+    args: [NebulaX, true],
+    type: "write",
+    enabled: true,
+  });
+
   console.log(data, error);
 
   useEffect(() => {
@@ -186,7 +196,7 @@ const UploadNFT = ({
 
       <input
         type="text"
-        placeholder="NFT Price in Eth"
+        placeholder="NFT Price in NebX"
         className="w-full p-2 mb-3 border border-gray-700 rounded bg-gray-800 text-white"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
@@ -238,14 +248,16 @@ const UploadNFT = ({
         onClick={uploadToIPFS}
         disabled={uploading}
       >
-        {uploading ? "Uploading..." : "Upload to IPFS"}
+        {uploading ? "Uploading..." : "Upload"}
       </button>
 
       {metadataUrl && (
         <button
           className="w-full mt-3 p-2 bg-white hover:bg-white/80 rounded text-black font-bold"
           onClick={() => {
-            if (write) write();
+            if (write && writeApproval) {
+              write(), writeApproval();
+            }
           }}
           disabled={isPending}
         >

@@ -3,14 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { ArrowBigUp } from "lucide-react";
 
-const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
+interface SpinWheelProps {
+  setShowSpin: () => void;
+}
+
+const SpinWheel = ({ setShowSpin }: SpinWheelProps) => {
   const wheelRef = useRef<HTMLCanvasElement>(null);
   const [hasSpun, setHasSpun] = useState(false);
-
   const myChartRef = useRef<Chart | null>(null);
-
   const [finalValue, setFinalValue] = useState(
     "Click On The Spin Button To Start"
   );
@@ -18,13 +19,8 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
 
   useEffect(() => {
     if (!wheelRef.current) return;
+    if (myChartRef.current) myChartRef.current.destroy();
 
-    // If a chart instance already exists, destroy it first
-    if (myChartRef.current) {
-      myChartRef.current.destroy();
-    }
-
-    // Create new chart
     const canvas = wheelRef.current;
     canvas.width = 500;
     canvas.height = 500;
@@ -49,7 +45,7 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
               "#D9D9D9",
               "#000000",
             ],
-            data: Array(11).fill(9.09), // 11 sections
+            data: Array(11).fill(9.09),
           },
         ],
       },
@@ -71,10 +67,8 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
       },
     });
 
-    // Store the new chart instance in ref
     myChartRef.current = newChart;
 
-    // Cleanup on unmount or re-render
     return () => {
       if (myChartRef.current) {
         myChartRef.current.destroy();
@@ -82,7 +76,6 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
     };
   }, []);
 
-  // Rotation logic
   interface RotationValue {
     minDegree: number;
     maxDegree: number;
@@ -104,9 +97,7 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
   ];
 
   const valueGenerator = (angleValue: number): void => {
-    // Adjust angle so the top indicator lines up with correct segment
     const adjustedAngle = (360 - angleValue) % 360;
-
     for (const range of rotationValues) {
       if (
         adjustedAngle >= range.minDegree &&
@@ -127,8 +118,8 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
 
     let currentRotation = (myChartRef.current.options as any).rotation || 0;
     let totalRotation = 0;
-    let speed = 20; // Initial speed
-    const deceleration = 0.98; // Slow down factor
+    let speed = 20;
+    const deceleration = 0.98;
     const targetRotation =
       currentRotation + 2000 + Math.floor(Math.random() * 360);
 
@@ -144,7 +135,6 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
           valueGenerator(adjustedAngle);
           setIsSpinning(false);
         }
-
         (myChartRef.current.options as any).rotation =
           currentRotation + totalRotation;
         myChartRef.current.update();
@@ -153,17 +143,25 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
   };
 
   return (
-    <div
-      className={`flex flex-col items-center justify-center h-screen bg- backdrop-blur-md`}
-    >
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 backdrop-blur-md">
+      {/* Modal header with close button */}
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={setShowSpin}
+          className="text-white bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+        >
+          Close
+        </button>
+      </div>
+
       {/* Wheel Container */}
-      <div className="relative w-[500px] h-[500px] p-8 rounded-lg shadow-lg">
+      <div className="relative w-[500px] h-[500px] p-8 rounded-lg shadow-lg bg-white">
         <canvas ref={wheelRef}></canvas>
       </div>
 
-      <p className="mt-4 text-lg text-white">
+      <p className="mt-4 text-lg text-white text-center">
         {hasSpun
-          ? `🎉🎊 Congratulation, you won ${finalValue.replace(
+          ? `🎉🎊 Congratulations, you won ${finalValue.replace(
               "Value:",
               ""
             )} NebulaX Coin 🎉🎊`
@@ -171,12 +169,11 @@ const SpinWheel = ({ setShowSpin }: { setShowSpin: () => void }) => {
       </p>
 
       {/* Spin Button */}
-
-      <div className="">
+      <div className="mt-4">
         <button
           onClick={!hasSpun ? spinWheel : setShowSpin}
           disabled={isSpinning}
-          className="border border-white bg-black text-white font-semibold text-xl px-10 py-3 rounded-lg shadow-md mt-4"
+          className="border border-white bg-black text-white font-semibold text-xl px-10 py-3 rounded-lg shadow-md"
         >
           {!hasSpun ? "Spin and Win" : "Close"}
         </button>

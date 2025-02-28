@@ -8,7 +8,7 @@ const playfair = Playfair_Display({ weight: "400", subsets: ["latin"] });
 
 const HeroSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center h-screen bg-black text-white">
+    <section className="flex flex-col items-center justify-center h-max lg:h-screen bg-black text-white w-full">
       <div className="absolute flex justify-between w-full opacity-30">
         <Image
           src={head}
@@ -22,13 +22,13 @@ const HeroSection = () => {
           alt="ecllipse"
           width={100}
           height={100}
-          className="w-full"
+          className="w-full hidden lg:block"
         />
       </div>
 
-      <div className="w-2/3 m-auto h-[80vh] flex flex-col justify-center relative z-10">
+      <div className="w-[90%] lg:w-2/3 m-auto h-[50vh] lg:h-[80vh] flex flex-col justify-center relative z-10">
         <h1
-          className="text-6xl font-medium text-center text-white leading-snug"
+          className="text-4xl lg:text-6xl font-medium lg:text-center text-white leading-relaxed lg:leading-[1.7]"
           style={playfair.style}
         >
           Empowering Creators <br /> Seamless NFT Tokenization and Trading with
