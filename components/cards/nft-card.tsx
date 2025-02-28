@@ -191,7 +191,7 @@ export default function NFTCard({
 
           <CheckCircle className="w-4 h-4 text-green-500" />
         </div>
-        <p className="text-sm text-white">{ethValue} ETH.</p>
+        <p className="text-sm text-white">{ethValue} NEBX.</p>
       </div>
 
       <div className="flex w-full items-center justify-between p-3">

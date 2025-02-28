@@ -40,7 +40,7 @@ const SearchBar = ({
   };
 
   return (
-    <div className="flex w-1/5 items-center border rounded-2xl shadow-sm bg-white p-1 focus-within:ring-1 focus-within:ring-brand-primary-1">
+    <div className="hidden lg:flex w-1/5 items-center border rounded-2xl shadow-sm bg-white p-1 focus-within:ring-1 focus-within:ring-brand-primary-1">
       <button
         onClick={handleSearch}
         aria-label="Execute search"

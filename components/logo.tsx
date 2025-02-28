@@ -8,7 +8,7 @@ const Logo = () => {
     <Link href="/" className="flex items-center space-x-5 text-white">
       <Image src={logo} alt="logo" width={50} height={50} />
 
-      <span className="text-2xl font-medium">NebulaX</span>
+      <span className="text-2xl font-medium hidden lg:block">NebulaX</span>
     </Link>
   );
 };
