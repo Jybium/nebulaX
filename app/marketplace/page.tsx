@@ -1,8 +1,8 @@
-import MarketplacePage from "@/page/marketplace-page";
+import ExplorePage from "@/page/explore-page";
 import React from "react";
 
 const page = () => {
-  return <MarketplacePage />;
+  return <ExplorePage />;
 };
 
 export default page;
