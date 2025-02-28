@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import image from "@/assets/nft-1.svg";
 
 import NFTCard from "@/components/cards/nft-card";
-import NFT_ABI from "@/abi/NebulaX.json";
-import { NebulaX } from "@/abi/contract-address";
+import NFT_ABI from "@/ABI/NebulaX.json";
+import { NebulaX } from "@/ABI/contract-address";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
