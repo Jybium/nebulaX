@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 interface NFT {
   id: string;
   creator?: string;
-  seller?: string;
+  seller: string;
   royalty?: string;
   amount: string;
   image: string;
@@ -31,7 +31,7 @@ export default function LatestDrops() {
 
   useEffect(() => {
     // Check if data exists and is structured as expected
-    if (Array.isArray(data) && data.length === 3) {
+    if (Array.isArray(data) && data?.length === 3) {
       const [ids, sellers, listings] = data;
 
       console.log(data);

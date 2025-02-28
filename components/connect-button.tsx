@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import UploadNFT from "./form/upload-nfts";
 
 import { NebulaXNFT } from "@/ABI/contract-address";
+import { NebulaX } from "@/ABI/contract-address";
 import NebulatxNFT from "@/abi/NebulaXNFT.json";
 import { useContractInteraction } from "@/hooks/use-contract-interaction";
 
@@ -22,7 +23,7 @@ export const ConnectBtn = () => {
     address: NebulaXNFT,
     abi: NebulatxNFT.abi,
     functionName: "setApprovalForAll",
-    args: [address, true],
+    args: [NebulaX, true],
     type: "write",
     enabled: true,
   });

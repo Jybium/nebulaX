@@ -5,6 +5,9 @@ import { useAccount } from "wagmi";
 import { emojiAvatarForAddress } from "@/lib/emoji-avater-for-address";
 import nft from "@/assets/nft-1.svg";
 
+import { NebulaXNFT } from "@/ABI/contract-address";
+import NebulatxNFT from "@/abi/NebulaXNFT.json";
+
 import { NebulaXToken } from "@/ABI/contract-address";
 import { NebulaX } from "@/ABI/contract-address";
 
@@ -43,6 +46,15 @@ export default function NFTCard({
     enabled: !!address,
   });
 
+  const { write, data, error, isPending } = useContractInteraction({
+    address: NebulaXNFT,
+    abi: NebulatxNFT.abi,
+    functionName: "setApprovalForAll",
+    args: [NebulaX, true],
+    type: "write",
+    enabled: true,
+  });
+
   const requiredAllowanceAmount = BigInt(price);
 
   // Write: Approve the NFT contract to spend tokens on behalf of the buyer.
@@ -71,8 +83,7 @@ export default function NFTCard({
     address: NebulaX,
     abi: NebulaX_ABI.abi,
     functionName: "buyNFT",
-    // Adjust these arguments according to your contract. Here we pass seller, token id, and amount.
-    args: [seller, id, requiredAllowanceAmount],
+    args: [creator, id, 1],
     type: "write",
     enabled: true,
   });
@@ -81,6 +92,12 @@ export default function NFTCard({
     if (!address) {
       toast.error("Please connect your wallet.");
       return;
+    }
+
+    if (write) {
+      write();
+    } else {
+      toast.error("Write function is not available.");
     }
 
     console.log("Token Balance:", tokenBalance);
@@ -100,7 +117,6 @@ export default function NFTCard({
         const approveTx = await approveWrite();
         console.log("Approval transaction:", approveTx);
         toast.success("Approval successful. Now purchasing NFT...");
-        // Optionally wait for confirmation before proceeding.
       } else {
         toast.error("Approve function is not available.");
         return;
