@@ -68,14 +68,14 @@
 
 ## Smart Contract
 
-[Smart contract address](https://gist.github.com/nafkem/b1be2ff6db4d954f799759a1e80faf2c)
+[Smart contract address](https://github.com/Rogue-in-Anarchy/NebulaX)
 
 ---
 
 ## Presentation & Demo
 
 - **Presentation Slide:** [View Presentation](https://www.canva.com/design/DAGUycKhuFE/lffz3PHu0ebOj1b_f7DGlw/edit?utm_content=DAGUycKhuFE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)  
-- **Working Demo:** [Watch Demo](https://youtu.be/-_aN9XKy8fI?feature=shared)
+- **Working Demo:** [Watch Demo](https://youtu.be/dnsCxhJaTj4)
 
 ---
 
