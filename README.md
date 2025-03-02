@@ -1,4 +1,6 @@
 # NebulaX
+![NebulaX](assets/20250301_091329.jpg)
+
 
 **NebulaX** is a groundbreaking decentralized video DEX NFT platform designed to empower creators worldwide. Our vision is to provide a secure, transparent, and engaging marketplace where creators can upload, mint, and trade their video and image content—free from centralized gatekeeping and unreliable monetization systems.
 
